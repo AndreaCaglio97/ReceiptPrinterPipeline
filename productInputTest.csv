@@ -1,0 +1,4 @@
+name,isImported,price,category,quantity
+Product 1,false,10.25,GENERAL,1
+Product 2,false,15.50,GENERAL,1
+Product 3,false,5.05,GENERAL,1

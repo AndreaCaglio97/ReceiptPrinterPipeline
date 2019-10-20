@@ -1,0 +1,5 @@
+it/unimib/ReceiptPrinter/ProductTest.class
+it/unimib/ReceiptPrinter/ReceiptTest.class
+it/unimib/ReceiptPrinter/RoundingTest.class
+it/unimib/ReceiptPrinter/InputProductManagerTest.class
+it/unimib/ReceiptPrinter/FetchProductManagerTest.class

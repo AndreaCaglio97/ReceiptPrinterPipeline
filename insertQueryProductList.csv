@@ -1,0 +1,4 @@
+name,isImported,price,category,quantity
+bottle of water,false,0.25,FOOD,1
+Moby Dick,true,15.24,BOOK,1
+Moment,true,10.23,MEDICINE,1

@@ -1,0 +1,4 @@
+name,isImported,price,category,quantity
+Book,false,12.49,BOOK,1
+Music CD,false,14.99,GENERAL,1
+Chocolate bar,false,0.85,FOOD,1
