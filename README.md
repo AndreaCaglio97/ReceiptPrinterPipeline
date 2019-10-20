@@ -11,3 +11,15 @@ Ci siamo resi conto che il progetto contenuto nel repository che abbiamo creato 
 Per questo motivo abbiamo creato questo nuovo repository, in cui abbiamo caricato lo stesso progetto senza le dipendenze non occorrenti.
 Il link del vecchio repository è il seguente:
 https://gitlab.com/a.caglio5/2019_assignment1_productservletmvn
+
+## Descrizione progetto:
+
+Il progetto contenuto nel repository è un progetto maven che contiene un insieme di classi Java e dei relativi unit test.
+La funzionalità del progetto sono relative ad un gestore di ricevute e prodotti. Esse sono:
+
+1. Inserimento di prodotti in un DB da linea di comando
+2. Creazione e stampa di ricevute direttamente da linea di comando
+3. Creazione di ricevute a partire da file .csv e stampa di esse su file di testo
+4. Stampa di ricevute su linea di comando selezionando i prodotti dal DB
+5. Inserire nuovi prodotti nel DB a partire da un file .csv
+
