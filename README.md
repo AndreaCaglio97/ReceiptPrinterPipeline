@@ -17,7 +17,7 @@ https://gitlab.com/a.caglio5/2019_assignment1_productservletmvn
 ## Descrizione progetto:
 
 Il progetto contenuto nel repository è un progetto maven che contiene un insieme di classi Java e dei relativi unit test.
-La funzionalità del progetto sono relative ad un gestore di ricevute e prodotti. Esse sono:
+Le funzionalità del progetto sono relative ad un gestore di ricevute e prodotti. Esse sono:
 
 1. Inserimento di prodotti in un DB da linea di comando
 2. Creazione e stampa di ricevute direttamente da linea di comando
