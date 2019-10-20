@@ -32,3 +32,10 @@ La funzionalità del progetto sono relative ad un gestore di ricevute e prodotti
 Realizzata build con maven all'interno del file .gitlab-ci.yml tramite la seguente istruzione:
   
     - mvn compile
+
+
+#### Stage di unit-test
+
+Realizzata fase di unit-test con maven all'interno del file .gitlab-ci.yml tramite la seguente istruzione:
+  
+    - mvn test
