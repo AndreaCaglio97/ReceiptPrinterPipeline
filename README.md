@@ -3,7 +3,8 @@
 ## Assignment realizzato da un team di due sviluppatori:
 
 * Andrea Caglio 816762
-* Valeria Fedel (student ID to be assigned)
+* Valeria Fedel (n.ro di matricola in attesa di assegnamento)
+Link al repository del progetto: https://gitlab.com/a.caglio5/2019_assignment1_receiptprinter 
 
 #### Cambio di repository:
 
