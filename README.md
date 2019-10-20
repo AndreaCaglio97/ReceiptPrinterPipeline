@@ -4,6 +4,7 @@
 
 * Andrea Caglio 816762
 * Valeria Fedel (n.ro di matricola in attesa di assegnamento)
+
 Link al repository del progetto: https://gitlab.com/a.caglio5/2019_assignment1_receiptprinter 
 
 #### Cambio di repository:
@@ -24,3 +25,10 @@ La funzionalità del progetto sono relative ad un gestore di ricevute e prodotti
 4. Stampa di ricevute su linea di comando selezionando i prodotti dal DB
 5. Inserire nuovi prodotti nel DB a partire da un file .csv
 
+# DevOps
+
+#### Stage di build
+
+Realizzata build con maven all'interno del file .gitlab-ci.yml tramite la seguente istruzione:
+  
+    - mvn compile
