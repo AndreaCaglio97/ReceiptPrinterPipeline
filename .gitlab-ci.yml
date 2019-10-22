@@ -3,6 +3,7 @@ image: maven:3.6-jdk-8-slim
 stages:
   - build
   - unit-test
+  - package
 
 compile:
   stage: build
@@ -13,6 +14,11 @@ unit-test:
   stage: unit-test
   script: 
     - mvn test
+
+package:
+  stage: package
+  script:
+    - mvn package
 
 
 
