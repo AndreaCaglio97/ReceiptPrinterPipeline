@@ -39,3 +39,9 @@ Realizzata build con maven all'interno del file .gitlab-ci.yml tramite la seguen
 Realizzata fase di unit-test con maven all'interno del file .gitlab-ci.yml tramite la seguente istruzione:
   
     - mvn test
+    
+#### Stage di package
+
+Realizzata fase di package con maven all'interno del file .gitlab-ci.yml tramite la seguente istruzione:
+  
+    - mvn package
