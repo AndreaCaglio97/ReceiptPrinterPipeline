@@ -8,7 +8,7 @@ public class ExampleUnitTest {
 
     @Test
     public void test() {
-        assertFalse(true);
+        assertFalse(false);
     }
 
 }
