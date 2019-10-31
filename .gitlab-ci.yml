@@ -9,6 +9,9 @@ stages:
   - unit-test
   - integration-test
   - package
+  - release
+  - create-branch
+  - change-bugfix-version
 
 compile:
   stage: build
