@@ -30,6 +30,74 @@ package:
   script:
     - mvn package
 
+release:
+  stage: release
+  script:
+    - apt-get install -y openssh-client git
+    - mkdir -p ~/.ssh
+    - chmod 0700 ~/.ssh
+    - eval "$(ssh-agent -s)"
+    - ssh-add - <<< "${SSH}"
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - git config user.name $PUSH_USER_NAME
+    - git config user.email $PUSH_USER_EMAIL
+    - git remote set-url origin $SSH_GIT_URL
+    - git checkout master
+    - git reset --hard origin/master
+    - git status
+    - git branch
+    - git remote -v
+    - mvn $MAVEN_CLI_OPTS clean release:prepare -Dresume=false -DdryRun=false -Dmaven.test.skip=true -DscmCommentPrefix="Release pom [ci skip]"
+  only:
+    - master
 
+create-branch-by-tag:
+  stage: create-branch
+  script:
+    - mkdir -p ~/.ssh
+    - chmod 0700 ~/.ssh
+    - eval "$(ssh-agent -s)"
+    - ssh-add - <<< "${SSH}"
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - git config user.name $PUSH_USER_NAME
+    - git config user.email $PUSH_USER_EMAIL
+    - git remote set-url origin $SSH_GIT_URL
+    - git checkout master
+    - git pull
+    - git reset --hard $(git describe --abbrev=0 --tags)
+    - echo "Get version package from pom.xml"
+    - version=`python -c "import xml.etree.ElementTree as ET; print(ET.parse(open('pom.xml')).getroot().find('{http://maven.apache.org/POM/4.0.0}version').text)"`
+    - echo $version
+    - echo "Create branch version"
+    - git checkout -b $version
+    - git config --global push.default simple
+    - echo "Push version branch"
+    - git push --set-upstream origin $version
+  only:
+    - master
 
-
+release-build:
+  stage: change-bugfix-version
+  script:
+    - apt-get install -y openssh-client git
+    - mkdir -p ~/.ssh
+    - chmod 0700 ~/.ssh
+    - eval "$(ssh-agent -s)"
+    - ssh-add - <<< "${SSH1}"
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - echo $PUSH_USER_NAME
+    - git config user.name $PUSH_USER_NAME1
+    - git config user.email $PUSH_USER_EMAIL1
+    - version=`python -c "import xml.etree.ElementTree as ET; print(ET.parse(open('pom.xml')).getroot().find('{http://maven.apache.org/POM/4.0.0}version').text)"`
+    - echo $version
+    - echo "Create branch version"
+    - git checkout -b $version
+    - git status
+    - git branch
+    - ./mvn_build_helper.sh
+    - cat pom.xml
+  except:
+    - master
