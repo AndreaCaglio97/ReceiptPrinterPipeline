@@ -45,3 +45,7 @@ Realizzata fase di unit-test con maven all'interno del file .gitlab-ci.yml trami
 Realizzata fase di package con maven all'interno del file .gitlab-ci.yml tramite la seguente istruzione:
   
     - mvn package
+    
+#### Stage di release
+
+Lanciato lo stage di release
