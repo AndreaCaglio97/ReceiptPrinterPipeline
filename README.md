@@ -48,4 +48,4 @@ Realizzata fase di package con maven all'interno del file .gitlab-ci.yml tramite
     
 #### Stage di release
 
-Lanciato lo stage di release con ssh
+Lancio di test sul branch master per la release
