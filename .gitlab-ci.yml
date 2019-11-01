@@ -17,28 +17,28 @@ compile:
   stage: build
   script:
     - mvn compile
-  only:
+  except:
     - master
 
 unit-test:
   stage: unit-test
   script: 
     - mvn test
-  only:
+  except:
     - master
 
 integration-test:
   stage: integration-test
   script:
     - mvn integration-test
-  only:
+  except:
     - master
 
 package:
   stage: package
   script:
     - mvn package
-  only:
+  except:
     - master
 
 release:
@@ -63,6 +63,9 @@ release:
     - git branch
     - git remote -v
     - mvn $MAVEN_CLI_OPTS clean release:prepare -Dresume=false -DdryRun=false -Dmaven.test.skip=true -DscmCommentPrefix="Release pom [ci skip]"
+  only:
+      - master
+
 
 create-branch-by-tag:
   stage: create-branch
@@ -88,6 +91,8 @@ create-branch-by-tag:
     - git config --global push.default simple
     - echo "Push version branch"
     - git push --set-upstream origin $version
+  only:
+      - master
 
 release-build:
   stage: change-bugfix-version
