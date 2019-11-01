@@ -6,3 +6,4 @@ bin/
 .settings
 ReceiptPrinter.iml
 receipt.txt
+.m2
