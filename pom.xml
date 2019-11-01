@@ -34,7 +34,6 @@
   </dependencies>
 
   <scm>
-    <developerConnection>scm:git:https://gitlab.com/a.caglio5/2019_assignment1_receiptprinter</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
