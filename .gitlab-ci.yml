@@ -101,8 +101,8 @@ release-build:
     - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - echo $PUSH_USER_NAME
-    - git config user.name $PUSH_USER_NAME1
-    - git config user.email $PUSH_USER_EMAIL1
+    - git config user.name $PUSH_USER_NAME
+    - git config user.email $PUSH_USER_EMAIL
     - version=`python -c "import xml.etree.ElementTree as ET; print(ET.parse(open('pom.xml')).getroot().find('{http://maven.apache.org/POM/4.0.0}version').text)"`
     - echo $version
     - echo "Create branch version"
