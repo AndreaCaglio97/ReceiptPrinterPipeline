@@ -5,6 +5,12 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
   SSH_GIT_URL: "git@gitlab.com:a.caglio5/2019_assignment1_receiptprinter.git"
 
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .m2/repository/
+    - target/
+
 stages:
   - build
   - verify
