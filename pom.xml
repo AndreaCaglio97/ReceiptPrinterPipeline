@@ -34,7 +34,7 @@
   </dependencies>
 
   <scm>
-    <developerConnection>scm:git:ssh://git@gitlab.com:a.caglio5/2019_assignment1_receiptprinter.git</developerConnection>
+    <developerConnection>scm:git:ssh://git@gitlab.com/a.caglio5/2019_assignment1_receiptprinter.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
