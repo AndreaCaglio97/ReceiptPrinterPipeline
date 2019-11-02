@@ -50,7 +50,7 @@ release:
     - mkdir -p ~/.ssh
     - chmod 0700 ~/.ssh
     - eval "$(ssh-agent -s)"
-    - ssh-add <(echo "$SSH2")
+    - ssh-add <(echo "$SSH")
     - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - git config user.name $PUSH_USER_NAME
@@ -73,7 +73,7 @@ create-branch-by-tag:
     - mkdir -p ~/.ssh
     - chmod 0700 ~/.ssh
     - eval "$(ssh-agent -s)"
-    - ssh-add <(echo "$SSH2")
+    - ssh-add <(echo "$SSH")
     - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - git config user.name $PUSH_USER_NAME
@@ -101,7 +101,7 @@ release-build:
     - mkdir -p ~/.ssh
     - chmod 0700 ~/.ssh
     - eval "$(ssh-agent -s)"
-    - ssh-add <(echo "$SSH2")
+    - ssh-add <(echo "$SSH")
     - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - echo $PUSH_USER_NAME
