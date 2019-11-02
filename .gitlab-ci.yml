@@ -1,4 +1,4 @@
-image: maven:3.6-jdk-8-slim
+image: maven:3.5.3-jdk-8
 
 variables:
   MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
@@ -18,33 +18,32 @@ compile:
   stage: build
   script:
     - mvn compile
-  except:
+  only:
     - master
 
 unit-test:
   stage: unit-test
   script: 
     - mvn test
-  except:
+  only:
     - master
 
 integration-test:
   stage: integration-test
   script:
     - mvn integration-test
-  except:
+  only:
     - master
 
 package:
   stage: package
   script:
     - mvn package
-  except:
+  only:
     - master
 
 release:
   stage: release
-  image: maven:3.5.3-jdk-8
   script:
     - apt-get install -y openssh-client git
     - mkdir -p ~/.ssh
@@ -68,7 +67,6 @@ release:
 
 create-branch-by-tag:
   stage: create-branch
-  image: maven:3.5.3-jdk-8
   script:
     - mkdir -p ~/.ssh
     - chmod 0700 ~/.ssh
@@ -95,7 +93,6 @@ create-branch-by-tag:
 
 release-build:
   stage: change-bugfix-version
-  image: maven:3.5.3-jdk-8
   script:
     - apt-get install -y openssh-client git
     - mkdir -p ~/.ssh
