@@ -20,7 +20,7 @@ stages:
   - release
   - create-branch
 
-compile:
+build:
   stage: build
   script:
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS compile
