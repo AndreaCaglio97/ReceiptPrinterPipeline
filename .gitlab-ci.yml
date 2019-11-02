@@ -7,6 +7,7 @@ variables:
 
 stages:
   - build
+  - verify
   - unit-test
   - integration-test
   - package
@@ -17,6 +18,13 @@ compile:
   stage: build
   script:
     - mvn compile
+  only:
+    - master
+
+verify:
+  stage: verify
+  script:
+    - mvn checkstyle:checkstyle
   only:
     - master
 
