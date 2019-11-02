@@ -102,7 +102,6 @@ release:
   only:
       - master
 
-
 create-branch-by-tag:
   stage: create-branch
   script:
@@ -128,4 +127,3 @@ create-branch-by-tag:
     - git push --set-upstream origin $version
   only:
       - master
-
