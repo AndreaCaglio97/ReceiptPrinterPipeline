@@ -56,6 +56,10 @@ unit-test:
 
 integration-test:
   stage: integration-test
+  cache:
+    key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+    paths:
+      - .m2/repository/
   script:
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS integration-test
   only:
