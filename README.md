@@ -48,4 +48,4 @@ Realizzata fase di package con maven all'interno del file .gitlab-ci.yml tramite
     
 #### Stage di release
 
-Lancio di test sul branch master per la release con link per ssh
+Ora lo stage di release è corretto, occorre testare la creazione di un nuovo branch in base al tag
