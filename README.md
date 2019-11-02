@@ -27,7 +27,21 @@ Le funzionalità del progetto sono relative ad un gestore di ricevute e prodotti
 
 # DevOps
 
-Gli stage che implementano la pipeline sono 7, e sono i seguenti:
+## Branch
+
+Oltre al branch *master* sono stati creati altri due branch, *develop* e *release*, per permettere un'esecuzione mirata ed indipendente di solo alcune fasi della pipeline.
+Il branch *master* presenta tutte le fasi della pipeline, e rappresenta quindi il lavoro finale di creazione della pipeline. I branch *develop* e *release* invece presentano le due fasi di release e create-branch, oltre alla fase change-bugfix-version (in seguito abbandonata nella pipeline del branch *master*). Esse sono state usate per testare in maggior dettaglio l'esecuzione della pipeline a partire dallo stage di release. 
+
+
+## Continuous Integration and Continuous Deployment (CI/CD)
+
+### Cache
+
+È stata implementato un meccanismo di caching per permettere un'esecuzione più rapida delle varie fasi della pipeline. La cache è condivisa da tutti gli stage eseguiti che appartengono allo stesso branch. 
+
+### Stage
+
+Gli stage che implementano la pipeline CI/CD sono 7, e sono i seguenti:
 
     - build
     - verify
