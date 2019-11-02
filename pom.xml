@@ -5,7 +5,7 @@
 
   <groupId>it.unimib.ReceiptPrinter</groupId>
   <artifactId>ReceiptPrinter</artifactId>
-  <version>1.10-SNAPSHOT</version>
+  <version>1.10</version>
 
   <name>ReceiptPrinter</name>
   <!-- FIXME change it to the project's website -->
@@ -35,7 +35,7 @@
 
   <scm>
     <developerConnection>scm:git:ssh://git@gitlab.com/a.caglio5/2019_assignment1_receiptprinter.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v1.10</tag>
   </scm>
 
   <build>
