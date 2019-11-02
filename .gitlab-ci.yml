@@ -29,6 +29,11 @@ build:
 
 verify:
   stage: verify
+  cache:
+    key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+    paths:
+      - .m2/repository/
+      - target/
   script:
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS checkstyle:checkstyle
   only:
