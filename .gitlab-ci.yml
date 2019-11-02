@@ -45,6 +45,10 @@ verify:
 
 unit-test:
   stage: unit-test
+  cache:
+    key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+    paths:
+      - .m2/repository/
   script: 
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS test
   only:
