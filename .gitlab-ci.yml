@@ -73,6 +73,10 @@ package:
       - .m2/repository/
   script:
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS package
+  artifacts:
+    paths:
+      - target/*.jar
+    when: on_success
   only:
     - master
 
