@@ -67,6 +67,10 @@ integration-test:
 
 package:
   stage: package
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - .m2/repository/
   script:
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS package
   only:
