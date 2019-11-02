@@ -17,35 +17,35 @@ stages:
 compile:
   stage: build
   script:
-    - mvn compile
+    - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS compile
   only:
     - master
 
 verify:
   stage: verify
   script:
-    - mvn checkstyle:checkstyle
+    - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS checkstyle:checkstyle
   only:
     - master
 
 unit-test:
   stage: unit-test
   script: 
-    - mvn test
+    - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS test
   only:
     - master
 
 integration-test:
   stage: integration-test
   script:
-    - mvn integration-test
+    - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS integration-test
   only:
     - master
 
 package:
   stage: package
   script:
-    - mvn package
+    - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS package
   only:
     - master
 
