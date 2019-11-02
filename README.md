@@ -37,7 +37,7 @@ Il branch *master* presenta tutte le fasi della pipeline, e rappresenta quindi i
 
 ### Cache
 
-È stata implementato un meccanismo di caching per permettere un'esecuzione più rapida delle varie fasi della pipeline. La cache è condivisa da tutti gli stage eseguiti che appartengono allo stesso branch. 
+È stata implementato un meccanismo di caching per permettere un'esecuzione più rapida delle varie fasi della pipeline. La cache è stata impostata per essere condivisa dagli stage che appartengano allo stesso branch, tramite la variabile predefinita `"$CI_COMMIT_REF_SLUG"`, assegnata a `cache:key`. 
 
 ### Stage
 
@@ -51,9 +51,9 @@ Gli stage che implementano la pipeline CI/CD sono 7, e sono i seguenti:
     - release
     - create-branch
     
-L'esecuzione della pipeline in ciascuna delle sue fasi viene definita all'interno del file .gitlab-ci.yml. 
+L'esecuzione della pipeline in ciascuna delle sue fasi viene definita all'interno del file *.gitlab-ci.yml*. 
 Di seguito sono presentate in maggior dettaglio le varie fasi, e le relative istruzioni che implementano. 
-    
+ 
 #### Stage di build
 
 La fase di build è realizzata con Maven, per creare un'istanza eseguibile del progetto, e per scaricare le dipendenze. Questa fase è realizzata tramite la seguente istruzione:
@@ -74,7 +74,7 @@ Nella fase di unit-test è verificata la correttezza e il corretto funzionamento
 
 #### Stage di integration-test
 
-Nella fase di integration-test viene verificato il corretto funzionamento del progetto anche nell'interazione tra le varie componenti. Viene quindi verificata la corretta connessione del programma al DB MySQL. Per il testing è stato impiegato JUnit. La fase è realizzata tramite l'istruzione:
+Nella fase di integration-test viene verificato il corretto funzionamento del progetto anche nell'interazione tra le varie componenti. Viene quindi verificata la connessione del programma al DB MySQL. Per il testing è stato impiegato JUnit. La fase è realizzata tramite l'istruzione:
 
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS integration-test
 
@@ -86,8 +86,9 @@ Nella fase di package viene creato un file .jar del progetto. L'istruzione che l
     
 #### Stage di release
 
-La fase di release viene realizzata tramite il Release Plugin di Maven. 
-È stata inizialmente instaurata una connessione SSH, per permettere ad un utente di effettuare modifiche sul file POM.xml sull'ultima versione rilasciata. Per instaurare la connessione, è necessario fornire ad un utente i permessi per operare su file POM.xml. Sono perciò state passate le credenziali GitLab di un utente, ed un valore di chiave privata SSH, salvando questi valori nelle impostazioni del repository su GitLab. 
+La fase di release viene realizzata tramite il Release Plugin di Maven. \
+Inizialmente viene instaurata una connessione SSH, per permettere ad un utente di effettuare modifiche nel file *POM.xml* sull'identificativo dell'ultima versione rilasciata. Per instaurare la connessione, è necessario fornire ad un utente i permessi per operare su file *POM.xml*. Sono perciò passate le credenziali GitLab di un utente attraverso le variabili `$PUSH_USER_NAME` e `$PUSH_USER_EMAIL`. È stata passata una chiave privata SSH attraverso la variabile `$SSH`. I valori delle variabili sono salvati nelle impostazioni del repository su GitLab, da cui vengono acceduti. 
+Ciascuna release viene identificata con la notazione *v\*.\**.
 Una release del progetto viene in seguito creata con la seguente istruzione:
 
     - mvn $MAVEN_CLI_OPTS clean release:prepare -Dresume=false -DdryRun=false -Dmaven.test.skip=true -DscmCommentPrefix="Release pom [ci skip]"
