@@ -207,7 +207,7 @@ effettuare il relativo `push` sul repository. È stato necessario definire una v
 a cui viene assegnato il valore dell'ultima versione del progetto rilasciata.
 
 
-La creazione e il relativo push del nuovo branch sono state effettuate tramite le seguenti istruzioni:
+La creazione e il relativo push del nuovo branch sono stati effettuati tramite le seguenti istruzioni:
 
     - git checkout -b $version
 
