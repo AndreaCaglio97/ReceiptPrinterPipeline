@@ -44,8 +44,9 @@ Essi sono stati usati per testare l'esecuzione dello stage di release.
 
 
 Nell'elenco dei branch del repository è visibile anche un'insieme di branch e tag, 
-i quali sono associati alle versioni rilasciate. Questi branch e tag sono generati automaticamente dallo di release.
- La procedura è descritta in maniera più dettagliata nel paragrafo dedicato alla release.
+i quali sono associati alle versioni rilasciate. Questi branch e tag sono generati automaticamente dagli stage che si 
+occupano della release. La procedura è descritta in maniera più dettagliata nei paragrafi dedicati alla release.
+
 
 ### Image
 
@@ -175,10 +176,6 @@ di package.
 
 #### Stage di release
 
-Lo stage di release è stato suddiviso in 2 parti:
-
-###### release
-
 Per la fase di release viene utilizzato il `maven-release-plugin`. \
 Inizialmente viene instaurata una connessione SSH, la quale serve a realizzare le operazioni di `push` sul repository.
 Nel nostro caso, viene effettuato un commit per modificare nel file *pom.xml* l'identificativo della versione 
@@ -197,8 +194,10 @@ Una release del progetto viene creata con la seguente istruzione:
 
     - mvn $MAVEN_CLI_OPTS clean release:prepare -Dresume=false -DdryRun=false
      -Dmaven.test.skip=true -DscmCommentPrefix="Release pom [ci skip]"
+     
+Anche in questo stage è stata utilizzata l'etichetta `cache:`.
 
-###### create-branch-by-tag
+#### Stage di create-branch
 
 Nella fase di create-branch viene creato un branch per ciascuna versione rilasciata del progetto.
 
@@ -213,3 +212,5 @@ La creazione e il relativo push del nuovo branch sono state effettuate tramite l
     - git checkout -b $version
 
     - git push --set-upstream origin $version
+    
+Anche in questo stage è stata utilizzata l'etichetta `cache:`.
