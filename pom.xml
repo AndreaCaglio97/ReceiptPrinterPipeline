@@ -5,7 +5,7 @@
 
   <groupId>it.unimib.ReceiptPrinter</groupId>
   <artifactId>ReceiptPrinter</artifactId>
-  <version>1.22-SNAPSHOT</version>
+  <version>1.23-SNAPSHOT</version>
 
   <name>ReceiptPrinter</name>
   <!-- FIXME change it to the project's website -->
