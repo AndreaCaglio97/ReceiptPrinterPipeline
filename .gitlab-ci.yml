@@ -18,7 +18,6 @@ stages:
   - integration-test
   - package
   - release
-  - create-branch
 
 build:
   stage: build
@@ -55,9 +54,7 @@ findbugs:
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS site
   artifacts:
     paths:
-      - target/findbugsXml.xml
-      - target/site/findbugs.html
-      - target/site/findbugs.xml
+      - target/
   only:
     - master
 
@@ -100,6 +97,10 @@ package:
 
 release:
   stage: release
+  cache:
+    key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+    paths:
+      - .m2/repository/
   script:
     - apt-get install -y openssh-client git
     - mkdir -p ~/.ssh
@@ -121,7 +122,11 @@ release:
       - master
 
 create-branch-by-tag:
-  stage: create-branch
+  stage: release
+  cache:
+    key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+    paths:
+      - .m2/repository/
   script:
     - mkdir -p ~/.ssh
     - chmod 0700 ~/.ssh
