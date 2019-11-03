@@ -213,4 +213,3 @@ La creazione e il relativo push del nuovo branch sono stati effettuati tramite l
 
     - git push --set-upstream origin $version
     
-Anche in questo stage è stata utilizzata l'etichetta `cache:`.

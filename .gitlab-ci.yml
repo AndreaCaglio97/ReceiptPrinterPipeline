@@ -124,8 +124,6 @@ release:
 
 create-branch-by-tag:
   stage: create-branch
-  cache:
-    key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
   script:
     - mkdir -p ~/.ssh
     - chmod 0700 ~/.ssh
