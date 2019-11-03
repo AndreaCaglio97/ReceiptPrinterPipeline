@@ -18,6 +18,7 @@ stages:
   - integration-test
   - package
   - release
+  - create-branch
 
 build:
   stage: build
@@ -122,7 +123,7 @@ release:
       - master
 
 create-branch-by-tag:
-  stage: release
+  stage: create-branch
   cache:
     key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
     paths:
