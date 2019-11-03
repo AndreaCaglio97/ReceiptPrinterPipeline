@@ -1,10 +1,10 @@
 package it.unimib.ReceiptPrinter;
 
 import it.unimib.ReceiptPrinter.database.ConnectionManager;
+import it.unimib.ReceiptPrinter.database.DBManager;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class DBIntegrationTest {
 
@@ -14,13 +14,16 @@ public class DBIntegrationTest {
     }
 
     @Test
-    public void testQueryToDB1() {
-        assertTrue(true);
+    public void getProductsFromDBTest() {
+        assertNotEquals(DBManager.viewTable(), -1);
     }
 
     @Test
-    public void testQueryToDB2() {
-        assertTrue(true);
+    public void getSpecificProductFromDBTest() {
+        int numberOfProducts = DBManager.viewTable();
+        if(numberOfProducts > 0) {
+            assertNotNull(DBManager.productFromDB(1));
+        }
     }
 
 }

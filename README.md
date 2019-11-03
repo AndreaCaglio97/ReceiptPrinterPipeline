@@ -124,7 +124,12 @@ Anche in questo stage è stata utilizzata l'etichetta `cache:`.
 #### Stage di integration-test
 
 Nella fase di integration-test viene verificato la corretta interazione del progetto con altre componenti. 
-Nel nostro caso è stata testata la connessione al DB. 
+Nel nostro caso è stato testato:
+
+* Connessione al DB
+* Restituzione dei prodotti contenuti nel DB
+* Restituzione di uno specifico prodotto contenuto nel DB
+
 Per il testing è stato impiegato JUnit. La fase è realizzata tramite l'istruzione:
 
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS integration-test

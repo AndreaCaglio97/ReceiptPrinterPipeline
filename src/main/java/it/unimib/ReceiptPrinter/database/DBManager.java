@@ -10,26 +10,30 @@ import java.util.Scanner;
 
 public class DBManager {
 
-    public static void viewTable(Connection conn)  {
-
+    public static int viewTable()  {
+        int numberOfProducts = 0;
+        ConnectionManager connManager = ConnectionManager.getConnectionSingleton();
         Statement stmt = null;
         String query = "SELECT  name,  price, category\n" +
                         "FROM product\n" +
                         "WHERE is_imported = true\n" +
                         "ORDER BY id_product";
         try {
-            stmt = conn.createStatement();
+            stmt = connManager.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
+                numberOfProducts ++;
                 String name = rs.getString("name");
                 double price = rs.getDouble("price");
                 Category category =  Category.valueOf(rs.getString("category"));
                 System.out.println(name + "\t" + price + "\t" + category);
             }
-        } catch (SQLException e ) {
+        } catch (SQLException e) {
             System.out.println("ERROR! query NOT successfully completed");
+            numberOfProducts = -1;
         } finally {
             SQLExceptionHandling(stmt);
+            return numberOfProducts;
         }
     }
 
