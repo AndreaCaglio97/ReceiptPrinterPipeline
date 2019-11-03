@@ -27,7 +27,7 @@ build:
   only:
     - master
 
-verify:
+checkstyle:
   stage: verify
   cache:
     key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
@@ -39,7 +39,25 @@ verify:
   artifacts:
     paths:
       - target/checkstyle-result.xml
+      - target/site/checkstyle.html
     when: on_failure
+  only:
+    - master
+
+findbugs:
+  stage: verify
+  cache:
+    key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+    paths:
+      - .m2/repository/
+      - target/
+  script:
+    - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS site
+  artifacts:
+    paths:
+      - target/findbugsXml.xml
+      - target/site/findbugs.html
+      - target/site/findbugs.xml
   only:
     - master
 

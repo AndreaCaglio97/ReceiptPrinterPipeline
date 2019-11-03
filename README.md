@@ -100,17 +100,34 @@ La fase di build è stata realizzata con Maven, per creare un'istanza eseguibile
 
 #### Stage di verify
 
-La fase di verify permette di verificare la correttezza del codice di un progetto Maven. 
+Lo stage di verify è stato suddiviso in 2 parti:
+
+###### checkstyle
+
+La fase di checkstyle permette di verificare la correttezza del codice di un progetto Maven. 
 È stata realizzata tramite l'istruzione:
   
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS checkstyle:checkstyle
     
-In questo stage è stata utilizzata la `cache:` che fa uso anche della variabile `$CI_JOB_STAGE` la quale racchiude il nome
+È stata utilizzata la `cache:` che fa uso anche della variabile `$CI_JOB_STAGE` la quale racchiude il nome
 dello stage della pipeline definito nel file *.gitlab-ci.yml*.
 
 
-Inoltre è stata anche definita l'etichetta `artifacts:` la quale serve a memorizzare il risultato dell'esecuzione dello
-stage di verify nel caso in cui esso fallisca.
+Inoltre è stata anche definita l'etichetta `artifacts:` la quale serve a memorizzare il risultato dell'esecuzione 
+del checkstyle nel caso in cui esso fallisca.
+
+###### findbugs
+
+La fase di findbugs permette la realizzazione di report relativi all'analisi statica del codice java. Essi contengono
+potenziali bug che potrebbero riguardare il codice sottoposto all'analisi.
+Questa fase è stata realizzata tramite l'istruzione:
+
+    - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS site
+    
+Anche in questo caso è stata utilizzata l'etichetta `cache:`.
+
+
+Inoltre è stata anche definita l'etichetta `artifacts:` la quale serve a memorizzare i report di findbugs.
 
 #### Stage di unit-test
 
