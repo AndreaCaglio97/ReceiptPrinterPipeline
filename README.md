@@ -9,7 +9,7 @@ Link al repository del progetto: https://gitlab.com/a.caglio5/2019_assignment1_r
 
 #### Cambio di repository:
 
-Ci siamo resi conto che il progetto contenuto nel repository che abbiamo creato in precedenza, possedeva delle 
+Ci siamo resi conto che il progetto contenuto nel repository che abbiamo creato in precedenza possedeva delle 
 dipendenze non necessarie. Per questo motivo abbiamo creato questo nuovo repository, in cui abbiamo caricato lo stesso 
 progetto senza le dipendenze non occorrenti.
 
@@ -50,25 +50,25 @@ occupano della release. La procedura è descritta in maniera più dettagliata ne
 
 ### Image
 
-All'inizio del file *.gitlab-ci.yml* è stata definita l'immagine maven con cui realizzare i successivi comandi
+All'inizio del file *.gitlab-ci.yml* è stata definita l'immagine Maven con cui realizzare i successivi comandi
 negli stage.
 
 ### Variables
 
 All'interno del file *.gitlab-ci.yml* sono state definite le variabili `MAVEN_OPTS` e `MAVEN_CLI_OPTS` che sono state
-successivamente utilizzate negli stage per i comandi di maven. 
+successivamente utilizzate negli stage per i comandi di Maven. 
 
 È stata anche definita la variabile `SSH_GIT_URL` per specificare l'url del repository, necessario alla connessione 
-in ssh per lo stage di *release*.
+con SSH per lo stage di *release*.
 
 ### Cache
 
 È stata implementato un meccanismo di caching per permettere un'esecuzione più rapida delle varie fasi della pipeline.
-La cache viene utilizzata per specificare un elenco di file e directory che devono essere memorizzati nella cache tra i
+La cache viene utilizzata per specificare un elenco di file e directory che devono essere memorizzati nella cache tra i vari
 job.
 
 La cache è stata impostata per essere condivisa dagli stage che appartengano allo stesso branch,
- tramite la variabile predefinita `"$CI_COMMIT_REF_SLUG"`, specificata tramite l'etichetta a `key:`.
+ tramite la variabile predefinita `"$CI_COMMIT_REF_SLUG"`, specificata tramite l'etichetta `key:`.
  
  
 Tramite l'etichetta `paths:` è stato specificato quale path utilizzare per memorizzare i file nella cache.
@@ -110,16 +110,16 @@ La fase di checkstyle permette di verificare la correttezza del codice di un pro
   
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS checkstyle:checkstyle
     
-È stata utilizzata la `cache:` che fa uso anche della variabile `$CI_JOB_STAGE` la quale racchiude il nome
+È stata utilizzata la `cache:` che fa uso anche della variabile `$CI_JOB_STAGE`, la quale racchiude il nome
 dello stage della pipeline definito nel file *.gitlab-ci.yml*.
 
 
-Inoltre è stata anche definita l'etichetta `artifacts:` la quale serve a memorizzare il risultato dell'esecuzione 
+Inoltre, è stata definita l'etichetta `artifacts:` la quale serve a memorizzare il risultato dell'esecuzione 
 del checkstyle nel caso in cui esso fallisca.
 
 ###### findbugs
 
-La fase di findbugs permette la realizzazione di report relativi all'analisi statica del codice java. Essi contengono
+La fase di findbugs permette la realizzazione di report relativi all'analisi statica del codice Java. Essi contengono
 potenziali bug che potrebbero riguardare il codice sottoposto all'analisi.
 Questa fase è stata realizzata tramite l'istruzione:
 
@@ -128,7 +128,7 @@ Questa fase è stata realizzata tramite l'istruzione:
 Anche in questo caso è stata utilizzata l'etichetta `cache:`.
 
 
-Inoltre è stata anche definita l'etichetta `artifacts:` la quale serve a memorizzare i report di findbugs.
+È stata anche definita l'etichetta `artifacts:`, la quale serve a memorizzare i report di findbugs.
 
 #### Stage di unit-test
 
@@ -141,7 +141,7 @@ Anche in questo stage è stata utilizzata l'etichetta `cache:`.
 
 #### Stage di integration-test
 
-Nella fase di integration-test viene verificato la corretta interazione del progetto con altre componenti. 
+Nella fase di integration-test viene verificato la corretta interazione del progetto con le altre componenti. 
 Nel nostro caso è stato testato:
 
 * Connessione al DB
@@ -184,7 +184,7 @@ rilasciata.
 
 Per instaurare la connessione, è stato necessario fornire la **chiave privata SSH** che è stata definita nelle variabili
  d'ambiente per la pipeline di GitLab con il nome `$SSH`.
-Inoltre sono state fornite le credenziali di un utente attraverso le variabili `$PUSH_USER_NAME` e `$PUSH_USER_EMAIL` 
+Inoltre sono state fornite le credenziali di un utente attraverso le variabili `$PUSH_USER_NAME` e `$PUSH_USER_EMAIL`, 
 le quali vengono utilizzate per associare un utente ai commit. 
 Ad ogni release viene creato automaticamente un tag, tramite la notazione `v@{project.version}`
  specificata nel *pom.xml* attraverso il `maven-release-plugin`.
