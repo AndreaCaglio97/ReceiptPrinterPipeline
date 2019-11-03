@@ -33,7 +33,7 @@ Le funzionalità del progetto sono relative ad un gestore di ricevute e prodotti
 
 # DevOps
 
-##Branch e Tag
+## Branch e Tag
 
 Nel corso del lavoro, oltre al branch **master** sono stati creati altri due branch, **develop** e **release**, 
 per permettere un'esecuzione mirata ed indipendente di solo alcune fasi della pipeline. Sul branch **master** è 
@@ -46,7 +46,7 @@ Essi sono stati usati per testare l'esecuzione dello stage di release.
 Nell'elenco dei branch del repository è visibile anche un'insieme di branch e tag, 
 i quali sono associati alle versioni rilasciate. Questi branch e tag sono generati automaticamente dagli stage che si
 occupano della release. La procedura è descritta in maniera più dettagliata nei paragrafo dedicati alla
-[release](#release).
+[release](#release_id).
 
 ### Image
 
@@ -152,7 +152,7 @@ Anche in questo stage è stata utilizzata l'etichetta `cache:`.
 Tramite l'etichetta `artifacts:` viene specificato il path in cui memorizzare il .jar in caso di successo dello stage
 di package.
 
-#### <a id="release"></a>Stage di release
+#### <a id="release_id"></a>Stage di release
 
 Per la fase di release viene utilizzato il `maven-release-plugin`. \
 Inizialmente viene instaurata una connessione SSH, la quale serve a realizzare le operazioni di `push` sul repository.
