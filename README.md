@@ -19,7 +19,7 @@ Il link del vecchio repository è il seguente:
 
 https://gitlab.com/a.caglio5/2019_assignment1_productservletmvn
 
-## Descrizione progetto:
+## Descrizione del progetto:
 
 Il progetto contenuto nel repository è un progetto Maven che contiene un insieme di classi Java e dei relativi 
 unit test.
@@ -39,13 +39,14 @@ Nel corso del lavoro, oltre al branch **master** sono stati creati altri due bra
 per permettere un'esecuzione mirata ed indipendente di solo alcune fasi della pipeline. Sul branch **master** è 
 presente il lavoro finale di creazione della pipeline, infatti su di esso sono eseguiti tutti gli stage che sono stati 
 sviluppati. I branch **develop** e **release** invece, presentano le due fasi di release e create-branch, 
-oltre alla fase change-bugfix-version (in seguito abbandonata nella pipeline del branch **master**). 
+oltre alla fase change-bugfix-version (in seguito abbandonata dalla pipeline del branch **master**). 
 Essi sono stati usati per testare l'esecuzione dello stage di release.
 
 
 Nell'elenco dei branch del repository è visibile anche un'insieme di branch e tag, 
 i quali sono associati alle versioni rilasciate. Questi branch e tag sono generati automaticamente dagli stage che si 
-occupano della release. La procedura è descritta in maniera più dettagliata nei paragrafi dedicati alla release.
+occupano della release. Quest'ultima procedura è descritta in maniera più dettagliata nei paragrafi dedicati alla 
+release.
 
 
 ### Image
@@ -63,8 +64,8 @@ con SSH per lo stage di *release*.
 
 ### Cache
 
-È stata implementato un meccanismo di caching per permettere un'esecuzione più rapida delle varie fasi della pipeline.
-La cache viene utilizzata per specificare un elenco di file e directory che devono essere memorizzati nella cache tra i vari
+È stato implementato un meccanismo di caching per permettere un'esecuzione più rapida delle varie fasi della pipeline.
+La cache viene utilizzata per specificare un elenco di file e directory che devono essere memorizzati tra i vari
 job.
 
 La cache è stata impostata per essere condivisa dagli stage che appartengano allo stesso branch,
@@ -85,7 +86,7 @@ Gli stage che compongono la pipeline sono 7, e sono i seguenti:
     - release
     - create-branch
     
-I primi 6 sono esplicitamente richiesti dal testo dell'assignment, il settimo lo abbiamo creato in supporto dello stage
+I primi 6 sono esplicitamente richiesti dal testo dell'assignment, il settimo lo abbiamo creato in supporto allo stage
 di *release*.
 
 
@@ -94,8 +95,7 @@ Di seguito sono presentate in maggior dettaglio le varie fasi, e le relative ist
  
 #### Stage di build
 
-La fase di build è stata realizzata con Maven, per creare un'istanza eseguibile del progetto.
- Questa fase è stata realizzata tramite la seguente istruzione:
+La fase di build è stata realizzata con Maven. Questa fase è stata effettuata tramite la seguente istruzione:
   
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS compile
 
@@ -141,14 +141,14 @@ Anche in questo stage è stata utilizzata l'etichetta `cache:`.
 
 #### Stage di integration-test
 
-Nella fase di integration-test viene verificato la corretta interazione del progetto con le altre componenti. 
-Nel nostro caso è stato testato:
+Nella fase di integration-test è stata verificata la corretta interazione del progetto con il DB. 
+Nel nostro caso sono state testate:
 
 * Connessione al DB
 * Restituzione dei prodotti contenuti nel DB
 * Restituzione di uno specifico prodotto contenuto nel DB
 
-Per il testing è stato impiegato JUnit. La fase è realizzata tramite l'istruzione:
+Per il testing è stato impiegato JUnit. La fase è stata realizzata tramite l'istruzione:
 
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS integration-test
     
@@ -176,7 +176,7 @@ di package.
 
 #### Stage di release
 
-Per la fase di release viene utilizzato il `maven-release-plugin`. \
+Per la fase di release è stato utilizzato il `maven-release-plugin`. \
 Inizialmente viene instaurata una connessione SSH, la quale serve a realizzare le operazioni di `push` sul repository.
 Nel nostro caso, viene effettuato un commit per modificare nel file *pom.xml* l'identificativo della versione 
 rilasciata.
@@ -199,10 +199,10 @@ Anche in questo stage è stata utilizzata l'etichetta `cache:`.
 
 #### Stage di create-branch
 
-Nella fase di create-branch viene creato un branch per ciascuna versione rilasciata del progetto.
+Nella fase di create-branch viene creato un branch per la versione del progetto rilasciata.
 
  
-Come nella fase di release viene instaurata una connessione SSH, con lo scopo di creare appunto un nuovo branch ed 
+Come nella fase di release, viene instaurata una connessione SSH, con lo scopo di creare appunto un nuovo branch ed 
 effettuare il relativo `push` sul repository. È stato necessario definire una variabile `$version`, 
 a cui viene assegnato il valore dell'ultima versione del progetto rilasciata.
 
