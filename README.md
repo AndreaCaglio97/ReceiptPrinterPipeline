@@ -10,13 +10,13 @@ Link al repository del progetto: https://gitlab.com/a.caglio5/2019_assignment1_r
 #### Cambio di repository:
 
 Ci siamo resi conto che il progetto contenuto nel repository che abbiamo creato in precedenza, possedeva delle dipendenze non necessarie.
-Per questo motivo abbiamo creato questo nuovo repository, in cui abbiamo caricato lo stesso progetto senza le dipendenze non occorrenti.
+Per questo motivo abbiamo creato questo nuovo repository, in cui abbiamo caricato lo stesso progetto senza le dipendenze non occorrenti. \
 Il link del vecchio repository è il seguente:
 https://gitlab.com/a.caglio5/2019_assignment1_productservletmvn
 
 ## Descrizione progetto:
 
-Il progetto contenuto nel repository è un progetto Maven che contiene un insieme di classi Java e dei relativi unit test.
+Il progetto contenuto nel repository è un progetto Maven che contiene un insieme di classi Java e dei relativi unit test. \
 Le funzionalità del progetto sono relative ad un gestore di ricevute e prodotti. Esse sono:
 
 1. Inserimento di prodotti in un DB da linea di comando
@@ -29,7 +29,7 @@ Le funzionalità del progetto sono relative ad un gestore di ricevute e prodotti
 
 ## Branch
 
-Oltre al branch *master* sono stati creati altri due branch, *develop* e *release*, per permettere un'esecuzione mirata ed indipendente di solo alcune fasi della pipeline.
+Oltre al branch *master* sono stati creati altri due branch, *develop* e *release*, per permettere un'esecuzione mirata ed indipendente di solo alcune fasi della pipeline. \
 Il branch *master* presenta tutte le fasi della pipeline, e rappresenta quindi il lavoro finale di creazione della pipeline. I branch *develop* e *release* invece presentano le due fasi di release e create-branch, oltre alla fase change-bugfix-version (in seguito abbandonata nella pipeline del branch *master*). Esse sono state usate per testare in maggior dettaglio l'esecuzione della pipeline a partire dallo stage di release. 
 
 
@@ -41,7 +41,7 @@ Il branch *master* presenta tutte le fasi della pipeline, e rappresenta quindi i
 
 ### Stage
 
-Gli stage che implementano la pipeline CI/CD sono 7, e sono i seguenti:
+Gli stage che implementano la pipeline CI/CD sono 7, di cui 6 sono gli stage definiti dall'assignment. Essi sono i seguenti:
 
     - build
     - verify
@@ -51,7 +51,7 @@ Gli stage che implementano la pipeline CI/CD sono 7, e sono i seguenti:
     - release
     - create-branch
     
-L'esecuzione della pipeline in ciascuna delle sue fasi viene definita all'interno del file *.gitlab-ci.yml*. 
+L'esecuzione della pipeline in ciascuna delle sue fasi viene definita all'interno del file *.gitlab-ci.yml*. \
 Di seguito sono presentate in maggior dettaglio le varie fasi, e le relative istruzioni che implementano. 
  
 #### Stage di build
@@ -87,8 +87,8 @@ Nella fase di package viene creato un file .jar del progetto. L'istruzione che l
 #### Stage di release
 
 La fase di release viene realizzata tramite il Release Plugin di Maven. \
-Inizialmente viene instaurata una connessione SSH, per permettere ad un utente di effettuare modifiche nel file *POM.xml* sull'identificativo dell'ultima versione rilasciata. Per instaurare la connessione, è necessario fornire ad un utente i permessi per operare su file *POM.xml*. Sono perciò passate le credenziali GitLab di un utente attraverso le variabili `$PUSH_USER_NAME` e `$PUSH_USER_EMAIL`. È stata passata una chiave privata SSH attraverso la variabile `$SSH`. I valori delle variabili sono salvati nelle impostazioni del repository su GitLab, da cui vengono acceduti. 
-Ciascuna release viene identificata con la notazione *v\*.\**.
+Inizialmente viene instaurata una connessione SSH, per permettere ad un utente di effettuare modifiche nel file *POM.xml* sull'identificativo dell'ultima versione rilasciata. Per instaurare la connessione, è necessario fornire ad un utente i permessi per operare su file *POM.xml*. Sono perciò passate le credenziali GitLab di un utente attraverso le variabili `$PUSH_USER_NAME` e `$PUSH_USER_EMAIL`. È stata passata una chiave privata SSH attraverso la variabile `$SSH`. I valori delle variabili sono salvati nelle impostazioni del repository su GitLab, da cui vengono acceduti. \
+Ciascuna release viene identificata con la notazione *v\*.\**. \
 Una release del progetto viene in seguito creata con la seguente istruzione:
 
     - mvn $MAVEN_CLI_OPTS clean release:prepare -Dresume=false -DdryRun=false -Dmaven.test.skip=true -DscmCommentPrefix="Release pom [ci skip]"
