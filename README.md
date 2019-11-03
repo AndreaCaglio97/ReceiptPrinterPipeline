@@ -9,14 +9,20 @@ Link al repository del progetto: https://gitlab.com/a.caglio5/2019_assignment1_r
 
 #### Cambio di repository:
 
-Ci siamo resi conto che il progetto contenuto nel repository che abbiamo creato in precedenza, possedeva delle dipendenze non necessarie.
-Per questo motivo abbiamo creato questo nuovo repository, in cui abbiamo caricato lo stesso progetto senza le dipendenze non occorrenti. \
+Ci siamo resi conto che il progetto contenuto nel repository che abbiamo creato in precedenza, possedeva delle 
+dipendenze non necessarie. Per questo motivo abbiamo creato questo nuovo repository, in cui abbiamo caricato lo stesso 
+progetto senza le dipendenze non occorrenti.
+
+
 Il link del vecchio repository è il seguente:
+
+
 https://gitlab.com/a.caglio5/2019_assignment1_productservletmvn
 
 ## Descrizione progetto:
 
-Il progetto contenuto nel repository è un progetto Maven che contiene un insieme di classi Java e dei relativi unit test. \
+Il progetto contenuto nel repository è un progetto Maven che contiene un insieme di classi Java e dei relativi 
+unit test.
 Le funzionalità del progetto sono relative ad un gestore di ricevute e prodotti. Esse sono:
 
 1. Inserimento di prodotti in un DB da linea di comando
@@ -27,21 +33,49 @@ Le funzionalità del progetto sono relative ad un gestore di ricevute e prodotti
 
 # DevOps
 
-## Branch
+##Branch e Tag
 
-Oltre al branch *master* sono stati creati altri due branch, *develop* e *release*, per permettere un'esecuzione mirata ed indipendente di solo alcune fasi della pipeline. \
-Il branch *master* presenta tutte le fasi della pipeline, e rappresenta quindi il lavoro finale di creazione della pipeline. I branch *develop* e *release* invece presentano le due fasi di release e create-branch, oltre alla fase change-bugfix-version (in seguito abbandonata nella pipeline del branch *master*). Esse sono state usate per testare in maggior dettaglio l'esecuzione della pipeline a partire dallo stage di release. 
+Nel corso del lavoro, oltre al branch **master** sono stati creati altri due branch, **develop** e **release**, 
+per permettere un'esecuzione mirata ed indipendente di solo alcune fasi della pipeline. Sul branch **master** è 
+presente il lavoro finale di creazione della pipeline, infatti su di esso sono eseguiti tutti gli stage che sono stati 
+sviluppati. I branch **develop** e **release** invece, presentano le due fasi di release e create-branch, 
+oltre alla fase change-bugfix-version (in seguito abbandonata nella pipeline del branch **master**). 
+Essi sono stati usati per testare l'esecuzione dello stage di release.
 
 
-## Continuous Integration and Continuous Deployment (CI/CD)
+Nell'elenco dei branch del repository è visibile anche un'insieme di branch e tag, 
+i quali sono associati alle versioni rilasciate. Questi branch e tag sono generati automaticamente dagli stage che si
+occupano della release. La procedura è descritta in maniera più dettagliata nei paragrafo dedicati alla
+[release](#release).
+
+### Image
+
+All'inizio del file *.gitlab-ci.yml* è stata definita l'immagine maven con cui realizzare i successivi comandi
+negli stage.
+
+### Variables
+
+All'interno del file *.gitlab-ci.yml* sono state definite le variabili `MAVEN_OPTS` e `MAVEN_CLI_OPTS` che sono state
+successivamente utilizzate negli stage per i comandi di maven. 
+
+È stata anche definita la variabile `SSH_GIT_URL` per specificare l'url del repository, necessario alla connessione 
+in ssh per lo stage di *release*.
 
 ### Cache
 
-È stata implementato un meccanismo di caching per permettere un'esecuzione più rapida delle varie fasi della pipeline. La cache è stata impostata per essere condivisa dagli stage che appartengano allo stesso branch, tramite la variabile predefinita `"$CI_COMMIT_REF_SLUG"`, assegnata a `cache:key`. 
+È stata implementato un meccanismo di caching per permettere un'esecuzione più rapida delle varie fasi della pipeline.
+La cache viene utilizzata per specificare un elenco di file e directory che devono essere memorizzati nella cache tra i
+job.
+
+La cache è stata impostata per essere condivisa dagli stage che appartengano allo stesso branch,
+ tramite la variabile predefinita `"$CI_COMMIT_REF_SLUG"`, specificata tramite l'etichetta a `key:`.
+ 
+ 
+Tramite l'etichetta `paths:` è stato specificato quale path utilizzare per memorizzare i file nella cache.
 
 ### Stage
 
-Gli stage che implementano la pipeline CI/CD sono 7, di cui 6 sono gli stage definiti dall'assignment. Essi sono i seguenti:
+Gli stage che compongono la pipeline sono 7, e sono i seguenti:
 
     - build
     - verify
@@ -51,50 +85,106 @@ Gli stage che implementano la pipeline CI/CD sono 7, di cui 6 sono gli stage def
     - release
     - create-branch
     
-L'esecuzione della pipeline in ciascuna delle sue fasi viene definita all'interno del file *.gitlab-ci.yml*. \
-Di seguito sono presentate in maggior dettaglio le varie fasi, e le relative istruzioni che implementano. 
+I primi 6 sono esplicitamente richiesti dal testo dell'assignment, il settimo lo abbiamo creato in supporto dello stage
+di *release*.
+
+
+L'esecuzione della pipeline in ciascuna delle sue fasi viene definita all'interno del file *.gitlab-ci.yml*. 
+Di seguito sono presentate in maggior dettaglio le varie fasi, e le relative istruzioni implementate. 
  
 #### Stage di build
 
-La fase di build è realizzata con Maven, per creare un'istanza eseguibile del progetto, e per scaricare le dipendenze. Questa fase è realizzata tramite la seguente istruzione:
+La fase di build è stata realizzata con Maven, per creare un'istanza eseguibile del progetto.
+ Questa fase è stata realizzata tramite la seguente istruzione:
   
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS compile
 
 #### Stage di verify
 
-La fase di verify permette di verificare la correttezza del codice di un progetto Maven. Viene realizzata tramite l'istruzione:
+La fase di verify permette di verificare la correttezza del codice di un progetto Maven. 
+È stata realizzata tramite l'istruzione:
   
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS checkstyle:checkstyle
+    
+In questo stage è stata utilizzata la `cache:` che fa uso anche della variabile `$CI_JOB_STAGE` la quale racchiude il nome
+dello stage della pipeline definito nel file *.gitlab-ci.yml*.
+
+
+Inoltre è stata anche definita l'etichetta `artifacts:` la quale serve a memorizzare il risultato dell'esecuzione dello
+stage di verify nel caso in cui esso fallisca.
 
 #### Stage di unit-test
 
-Nella fase di unit-test è verificata la correttezza e il corretto funzionamento delle singole classi che compongono il progetto. Per il testing è stato impiegato JUnit. La fase è realizzata tramite l'istruzione:
+Nella fase di unit-test è stato verificato il corretto funzionamento delle classi
+ che compongono il progetto. Per il testing è stato impiegato JUnit. La fase è stata realizzata tramite l'istruzione:
 
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS test
+    
+Anche in questo stage è stata utilizzata l'etichetta `cache:`.
 
 #### Stage di integration-test
 
-Nella fase di integration-test viene verificato il corretto funzionamento del progetto anche nell'interazione tra le varie componenti. Viene quindi verificata la connessione del programma al DB MySQL. Per il testing è stato impiegato JUnit. La fase è realizzata tramite l'istruzione:
+Nella fase di integration-test viene verificato la corretta interazione del progetto con altre componenti. 
+Nel nostro caso è stata testata la connessione al DB. 
+Per il testing è stato impiegato JUnit. La fase è realizzata tramite l'istruzione:
 
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS integration-test
+    
+Anche in questo stage è stata utilizzata l'etichetta `cache:`.
+
+#### Modifiche al pom per gestire gli stage di unit-test e integration-test
+
+Nel *pom.xml* è stato incluso il plugin **maven-surefire-plugin**. Tramite esso sono state definite due esecuzioni:
+
+1. L'esecuzione degli unit-test attraverso l'**esclusione** di tutti i file con formato `**/*IntegrationTest.java`
+2. L'esecuzione degli integration-test attraverso l'**inclusione** di tutti i file con 
+formato `**/*IntegrationTest.java`
 
 #### Stage di package
 
-Nella fase di package viene creato un file .jar del progetto. L'istruzione che la realizza è la seguente: 
+Nella fase di package è stato creato il file .jar del progetto. L'istruzione che lo realizza è la seguente: 
   
     - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS package
     
-#### Stage di release
+Anche in questo stage è stata utilizzata l'etichetta `cache:`.
 
-La fase di release viene realizzata tramite il Release Plugin di Maven. \
-Inizialmente viene instaurata una connessione SSH, per permettere ad un utente di effettuare modifiche nel file *POM.xml* sull'identificativo dell'ultima versione rilasciata. Per instaurare la connessione, è necessario fornire ad un utente i permessi per operare su file *POM.xml*. Sono perciò passate le credenziali GitLab di un utente attraverso le variabili `$PUSH_USER_NAME` e `$PUSH_USER_EMAIL`. È stata passata una chiave privata SSH attraverso la variabile `$SSH`. I valori delle variabili sono salvati nelle impostazioni del repository su GitLab, da cui vengono acceduti. \
-Ciascuna release viene identificata con la notazione *v\*.\**. \
-Una release del progetto viene in seguito creata con la seguente istruzione:
 
-    - mvn $MAVEN_CLI_OPTS clean release:prepare -Dresume=false -DdryRun=false -Dmaven.test.skip=true -DscmCommentPrefix="Release pom [ci skip]"
+Tramite l'etichetta `artifacts:` viene specificato il path in cui memorizzare il .jar in caso di successo dello stage
+di package.
+
+#### <a id="release"></a>Stage di release
+
+Per la fase di release viene utilizzato il `maven-release-plugin`. \
+Inizialmente viene instaurata una connessione SSH, la quale serve a realizzare le operazioni di `push` sul repository.
+Nel nostro caso, viene effettuato un commit per modificare nel file *pom.xml* l'identificativo della versione 
+rilasciata.
+ 
+
+Per instaurare la connessione, è stato necessario fornire la **chiave privata SSH** che è stata definita nelle variabili
+ d'ambiente per la pipeline di GitLab con il nome `$SSH`.
+Inoltre sono state fornite le credenziali di un utente attraverso le variabili `$PUSH_USER_NAME` e `$PUSH_USER_EMAIL` 
+le quali vengono utilizzate per associare un utente ai commit. 
+Ad ogni release viene creato automaticamente un tag, tramite la notazione `v@{project.version}`
+ specificata nel *pom.xml* attraverso il `maven-release-plugin`.
+
+
+Una release del progetto viene creata con la seguente istruzione:
+
+    - mvn $MAVEN_CLI_OPTS clean release:prepare -Dresume=false -DdryRun=false
+     -Dmaven.test.skip=true -DscmCommentPrefix="Release pom [ci skip]"
 
 #### Stage di create-branch
 
-Nella fase di create-branch viene creato un branch per ciascuna versione rilasciata del progetto. Come nella fase di release viene instaurata una connessione SSH, per permettere di effettuare modifiche sulla struttura del repository. Viene in seguito definita una variabile "version", a cui viene assegnato il valore dell'ultima release rilasciata. La creazione del nuovo branch si effettua tramite l'istruzione:
+Nella fase di create-branch viene creato un branch per ciascuna versione rilasciata del progetto.
+
+ 
+Come nella fase di release viene instaurata una connessione SSH, con lo scopo di creare appunto un nuovo branch ed 
+effettuare il relativo `push` sul repository. È stato necessario definire una variabile `$version`, 
+a cui viene assegnato il valore dell'ultima versione del progetto rilasciata.
+
+
+La creazione e il relativo push del nuovo branch sono state effettuate tramite le seguenti istruzioni:
+
+    - git checkout -b $version
 
     - git push --set-upstream origin $version
