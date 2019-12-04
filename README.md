@@ -1,24 +1,5 @@
 # ReceiptPrinter
 
-## Assignment realizzato da un team di due sviluppatori:
-
-* Andrea Caglio 816762
-* Valeria Fedel (n.ro matricola in fase di assegnamento)
-
-Link al repository del progetto: https://gitlab.com/a.caglio5/2019_assignment1_receiptprinter 
-
-#### Cambio di repository:
-
-Ci siamo resi conto che il progetto contenuto nel repository che abbiamo creato in precedenza possedeva delle 
-dipendenze non necessarie. Per questo motivo abbiamo creato questo nuovo repository, in cui abbiamo caricato lo stesso 
-progetto senza le dipendenze non occorrenti.
-
-
-Il link del vecchio repository è il seguente:
-
-
-https://gitlab.com/a.caglio5/2019_assignment1_productservletmvn
-
 ## Descrizione del progetto:
 
 Il progetto contenuto nel repository è un progetto Maven che contiene un insieme di classi Java e dei relativi 
